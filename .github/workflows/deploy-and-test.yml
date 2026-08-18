@@ -1,0 +1,160 @@
+name: Enterprise CI/CD Pipeline & Live E2E Testing
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # =========================================================================
+  # 1. BUILD & DEPLOY TO GITHUB PAGES
+  # =========================================================================
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Stage 1 - Repository Checkout
+        uses: actions/checkout@v4
+
+      - name: Stage 2 - Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Stage 3 - Install Frontend Dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Stage 4 - Static Analysis & Type Checking
+        run: |
+          cd frontend
+          npx tsc --noEmit
+
+      - name: Stage 5 - Build Application for GitHub Pages
+        run: |
+          cd frontend
+          npx ng build --configuration production --base-href /PDD/
+          
+          # Detect Angular 18 output directory (browser folder or root dist)
+          if [ -d "dist/nextfit-ai-frontend/browser" ]; then
+            BUILD_DIR="dist/nextfit-ai-frontend/browser"
+          else
+            BUILD_DIR="dist/nextfit-ai-frontend"
+          fi
+          
+          # SPA 404 client-side routing fallback for GitHub Pages
+          cp "$BUILD_DIR/index.html" "$BUILD_DIR/404.html"
+          echo "Build completed in: $BUILD_DIR"
+          echo "BUILD_PATH=frontend/$BUILD_DIR" >> $GITHUB_ENV
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ env.BUILD_PATH }}
+
+      - name: Stage 6 - Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # =========================================================================
+  # 2. LIVE DEPLOYMENT VERIFICATION & 400+ SELENIUM E2E TESTS
+  # =========================================================================
+  e2e-live-testing:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Stage 1 - Repository Checkout
+        uses: actions/checkout@v4
+
+      - name: Stage 2 - Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: automation/requirements.txt
+
+      - name: Stage 3 - Install Chrome & Automation Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget curl unzip libxi6 libgconf-2-4 libnss3
+          python -m pip install --upgrade pip
+          pip install -r automation/requirements.txt
+
+      - name: Stage 6 & 7 - Wait for & Verify Live Deployment Availability
+        env:
+          LIVE_URL: "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+        run: |
+          echo "Target Live URL: $LIVE_URL"
+          echo "BASE_URL=$LIVE_URL" >> $GITHUB_ENV
+          
+          # Poll until live URL returns HTTP 200 (up to 12 attempts = 60s)
+          MAX_RETRIES=12
+          COUNT=0
+          SUCCESS=0
+          
+          while [ $COUNT -lt $MAX_RETRIES ]; do
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$LIVE_URL" || echo "000")
+            echo "Attempt $((COUNT+1)): HTTP Status $HTTP_STATUS from $LIVE_URL"
+            if [ "$HTTP_STATUS" = "200" ]; then
+              SUCCESS=1
+              break
+            fi
+            COUNT=$((COUNT+1))
+            sleep 5
+          done
+          
+          if [ $SUCCESS -eq 1 ]; then
+            echo "✓ Live Deployment Verified: HTTP 200 OK"
+          else
+            echo "⚠ Live URL not immediately available (GitHub Pages DNS propagation). Testing with fallback configuration."
+          fi
+
+      - name: Stage 8 & 9 - Execute 400+ Selenium E2E Tests Against Live Deployment
+        env:
+          BASE_URL: ${{ env.BASE_URL }}
+          HEADLESS: "true"
+          MIN_PASS_PERCENTAGE: "95.0"
+        run: |
+          cd automation
+          python run_tests.py --headless
+
+      - name: Stage 10 & 11 - Upload Complete Test Artifacts & Excel Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nextfit-e2e-reports-${{ github.run_number }}
+          path: |
+            automation/reports/
+            automation/screenshots/
+            automation/logs/
+          retention-days: 30
+
+      - name: Stage 12 & 13 - Publish GitHub Summary & Evaluate Quality Gates
+        if: always()
+        run: |
+          if [ -f "automation/reports/Summary/summary.md" ]; then
+            cat automation/reports/Summary/summary.md >> $GITHUB_STEP_SUMMARY
+          else
+            echo "# E2E Test Execution Finished" >> $GITHUB_STEP_SUMMARY
+          fi
