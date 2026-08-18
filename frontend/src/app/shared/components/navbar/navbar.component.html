@@ -1,0 +1,84 @@
+<nav class="navbar-container">
+  <div class="container navbar-content">
+    <!-- Brand Logo -->
+    <a routerLink="/" class="brand-logo" (click)="closeMobileMenu()">
+      <div class="logo-icon">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+      </div>
+      <div class="logo-text">
+        <span class="logo-title">NextFit <span class="logo-accent">AI</span></span>
+        <span class="logo-subtitle">Fashion Intelligence</span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <div class="nav-links desktop-only" *ngIf="authService.isAuthenticated()">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">
+        <i class="fa-solid fa-house"></i> Home
+      </a>
+      <a routerLink="/analysis" routerLinkActive="active" class="nav-link">
+        <i class="fa-solid fa-camera"></i> AI Analysis
+      </a>
+      <a routerLink="/recommendations" routerLinkActive="active" class="nav-link">
+        <i class="fa-solid fa-shirt"></i> Outfits
+      </a>
+      <a routerLink="/shopping" routerLinkActive="active" class="nav-link">
+        <i class="fa-solid fa-tags"></i> Shopping
+      </a>
+      <a routerLink="/calendar" routerLinkActive="active" class="nav-link">
+        <i class="fa-solid fa-calendar-days"></i> Calendar
+      </a>
+      <a routerLink="/assistant" routerLinkActive="active" class="nav-link ai-stylist-link">
+        <i class="fa-solid fa-robot"></i> AI Stylist
+      </a>
+      <a routerLink="/favorites" routerLinkActive="active" class="nav-link">
+        <i class="fa-solid fa-heart"></i> Favorites
+      </a>
+    </div>
+
+    <!-- Right Side Actions / User Profile -->
+    <div class="nav-actions desktop-only">
+      <ng-container *ngIf="authService.isAuthenticated(); else authButtons">
+        <a routerLink="/profile" class="user-pill" title="My Fashion Profile">
+          <div class="user-avatar">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <span class="user-name">{{ userProfile?.name || currentUser?.name || 'My Profile' }}</span>
+        </a>
+        <button (click)="logout()" class="btn-icon" title="Sign Out">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
+      </ng-container>
+
+      <ng-template #authButtons>
+        <a routerLink="/auth/login" class="btn btn-secondary btn-sm">Sign In</a>
+        <a routerLink="/auth/register" class="btn btn-primary btn-sm">Get Started</a>
+      </ng-template>
+    </div>
+
+    <!-- Mobile Hamburger Toggle -->
+    <button class="mobile-menu-btn mobile-only" (click)="toggleMobileMenu()" aria-label="Toggle Navigation">
+      <i class="fa-solid" [ngClass]="isMobileMenuOpen ? 'fa-xmark' : 'fa-bars'"></i>
+    </button>
+  </div>
+
+  <!-- Mobile Dropdown Menu -->
+  <div class="mobile-drawer" *ngIf="isMobileMenuOpen">
+    <div class="mobile-links" *ngIf="authService.isAuthenticated()">
+      <a routerLink="/dashboard" (click)="closeMobileMenu()" class="mobile-link"><i class="fa-solid fa-house"></i> Home Dashboard</a>
+      <a routerLink="/analysis" (click)="closeMobileMenu()" class="mobile-link"><i class="fa-solid fa-camera"></i> AI Visual Analysis</a>
+      <a routerLink="/recommendations" (click)="closeMobileMenu()" class="mobile-link"><i class="fa-solid fa-shirt"></i> Recommendations</a>
+      <a routerLink="/shopping" (click)="closeMobileMenu()" class="mobile-link"><i class="fa-solid fa-tags"></i> Shopping & Deals</a>
+      <a routerLink="/calendar" (click)="closeMobileMenu()" class="mobile-link"><i class="fa-solid fa-calendar-days"></i> Outfit Calendar</a>
+      <a routerLink="/assistant" (click)="closeMobileMenu()" class="mobile-link"><i class="fa-solid fa-robot"></i> AI Stylist Assistant</a>
+      <a routerLink="/favorites" (click)="closeMobileMenu()" class="mobile-link"><i class="fa-solid fa-heart"></i> Saved Favorites</a>
+      <a routerLink="/profile" (click)="closeMobileMenu()" class="mobile-link"><i class="fa-solid fa-user-gear"></i> Profile & Preferences</a>
+      <a routerLink="/settings" (click)="closeMobileMenu()" class="mobile-link"><i class="fa-solid fa-gear"></i> Settings</a>
+      <button (click)="logout()" class="mobile-link text-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</button>
+    </div>
+    <div class="mobile-links" *ngIf="!authService.isAuthenticated()">
+      <a routerLink="/auth/login" (click)="closeMobileMenu()" class="mobile-link">Sign In</a>
+      <a routerLink="/auth/register" (click)="closeMobileMenu()" class="mobile-link">Register New Account</a>
+    </div>
+  </div>
+</nav>
