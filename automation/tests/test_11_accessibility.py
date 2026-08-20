@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 from automation.pages.base_page import BasePage
 
-# 20 Test Cases for Web Accessibility (a11y), ARIA, Alt Tags, and Keyboard Flow
+# 30 Test Cases for Web Accessibility (a11y), ARIA, Alt Tags, and Keyboard Flow
 A11Y_TEST_CASES = [
     ("A11Y_001", "Page HTML element has valid lang='en' attribute", "P2", "dashboard", "html[lang='en']"),
     ("A11Y_002", "Single top-level <h1> heading tag per page on Dashboard", "P2", "dashboard", "h1"),
@@ -24,6 +24,16 @@ A11Y_TEST_CASES = [
     ("A11Y_018", "Navigation links contain text or accessible icon labels", "P2", "dashboard", ".nav-link, a"),
     ("A11Y_019", "Input placeholder text provides clear guidance", "P3", "assistant", "input[placeholder]"),
     ("A11Y_020", "Font styling uses relative rem/em units for zoom scalability", "P3", "dashboard", "body"),
+    ("A11Y_021", "ARIA expanded attribute state on collapsible menus", "P2", "dashboard", "button"),
+    ("A11Y_022", "ARIA live region on assistant dynamic response stream", "P2", "assistant", ".chat-messages"),
+    ("A11Y_023", "ARIA modal attribute on price comparison dialog", "P2", "recommendations", ".modal-overlay"),
+    ("A11Y_024", "Visual focus outline indicator visible during keyboard navigation", "P2", "dashboard", ":focus"),
+    ("A11Y_025", "Screen reader skip to main content navigation link", "P3", "dashboard", "a.skip-link, body"),
+    ("A11Y_026", "SVG icons have aria-hidden='true' or meaningful title", "P3", "dashboard", "svg, i"),
+    ("A11Y_027", "Form input error messages associated via aria-describedby", "P2", "auth/register", "input"),
+    ("A11Y_028", "Slider input has aria-valuenow and aria-valuemin attributes", "P2", "shopping", "input[type='range']"),
+    ("A11Y_029", "Dropdown select elements have accessible names", "P2", "profile", "select"),
+    ("A11Y_030", "Adequate touch target size (minimum 44x44px) on mobile buttons", "P2", "dashboard", "button"),
 ]
 
 @pytest.mark.parametrize("test_id, name, priority, path, target_css", A11Y_TEST_CASES)

@@ -1,6 +1,6 @@
 # NextFit AI – Enterprise E2E Test Automation Framework
 
-An enterprise-grade Selenium WebDriver + Pytest E2E automation framework designed for **400+ categorized test cases** executing directly against the live GitHub Pages deployment.
+An enterprise-grade Selenium WebDriver + Pytest E2E automation framework designed for **670+ categorized test cases (minimum 500+ required)** executing directly against the live GitHub Pages deployment.
 
 ---
 
@@ -8,21 +8,23 @@ An enterprise-grade Selenium WebDriver + Pytest E2E automation framework designe
 
 1. **Strict Live Deployment Execution**: Tests run exclusively against `BASE_URL` (e.g. `https://narasimhareddy224.github.io/PDD/`).
 2. **Page Object Model (POM)**: 12 modular page object classes with explicit waits, stale element recovery, and automatic DOM readiness synchronization.
-3. **400+ Executable Test Cases** across 14 categories:
-   - Authentication (40)
-   - Authorization & Route Protection (40)
-   - Navigation & Routing (30)
-   - UI & Glassmorphism Validation (50)
-   - Forms & Input Elements (50)
-   - CRUD Operations (50)
-   - Input Validation & Boundaries (40)
-   - Error Handling & Fallbacks (20)
-   - Session Lifecycle Management (20)
-   - Photo Upload & Vision Capture (20)
-   - Web Accessibility / a11y (20)
-   - Responsive Design on Viewports (20)
-   - Performance Smoke & Load Budgets (20)
-   - End-to-End User Regression (50)
+3. **670+ Executable Test Cases** across 16 categories:
+   - Authentication (50)
+   - Authorization & Route Protection (50)
+   - Navigation & Routing (40)
+   - UI & Glassmorphism Validation (60)
+   - Forms & Input Elements (60)
+   - CRUD Operations (60)
+   - Input Validation & Boundaries (50)
+   - Error Handling & Fallbacks (30)
+   - Session Lifecycle Management (30)
+   - Photo Upload & Vision Capture (30)
+   - Web Accessibility / a11y (30)
+   - Responsive Design on Viewports (30)
+   - Performance Smoke & Load Budgets (30)
+   - End-to-End User Regression (60)
+   - API Contracts & Schema Validation (30)
+   - Mobile Device Emulation (30)
 4. **Multi-Sheet Excel Reporting**: Generates `Automation_Test_Report.xlsx` with 6 detailed sheets:
    - Sheet 1: Executed Test Cases
    - Sheet 2: Passed Tests
@@ -62,7 +64,7 @@ automation/
 │   ├── html_reporter.py        # Glassmorphic HTML dashboard
 │   ├── summary_generator.py    # GitHub Actions summary generator
 │   └── logger.py               # Structured logging utility
-├── tests/                      # 400+ Executable Pytest Test Cases
+├── tests/                      # 670+ Executable Pytest Test Cases
 │   ├── conftest.py             # Driver fixture, failure screenshot hook
 │   ├── test_01_authentication.py
 │   ├── test_02_authorization.py
@@ -77,7 +79,9 @@ automation/
 │   ├── test_11_accessibility.py
 │   ├── test_12_responsive_design.py
 │   ├── test_13_performance_smoke.py
-│   └── test_14_regression.py
+│   ├── test_14_regression.py
+│   ├── test_15_api_contracts.py
+│   └── test_16_mobile_emulation.py
 ├── reports/                    # Generated Excel, HTML, JSON, and Markdown reports
 ├── screenshots/                # Failure screenshot evidence
 ├── logs/                       # Execution and browser logs
@@ -101,7 +105,7 @@ pip install -r requirements.txt
 
 ### 3. Execute Tests
 ```bash
-# Run full 400+ test suite in Headless Chrome against default Live URL
+# Run full 670+ test suite in Headless Chrome against default Live URL
 python run_tests.py
 
 # Run against custom base URL

@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 from automation.pages.base_page import BasePage
 
-# 50 Test Cases for Forms, Inputs, Dropdowns, Checkboxes, and Sliders
+# 60 Test Cases for Forms, Inputs, Dropdowns, Checkboxes, and Sliders
 FORM_TEST_CASES = [
     ("FORM_001", "Profile name input field text entry", "P1", "profile", "input[name='name']", "Alex Rivers Updated"),
     ("FORM_002", "Profile gender dropdown select: male", "P2", "profile", "select[name='gender']", "male"),
@@ -54,6 +54,16 @@ FORM_TEST_CASES = [
     ("FORM_048", "Settings Save Chat History toggle checkbox", "P3", "settings", "input[type='checkbox']", "toggle"),
     ("FORM_049", "Image Analysis manual corrections skin tone select", "P2", "analysis", "select", "Olive"),
     ("FORM_050", "Image Analysis manual corrections body type select", "P2", "analysis", "select", "Athletic"),
+    ("FORM_051", "Shopping platform filter checkbox: Amazon", "P2", "shopping", "input[type='checkbox']", "Amazon"),
+    ("FORM_052", "Shopping platform filter checkbox: Flipkart", "P2", "shopping", "input[type='checkbox']", "Flipkart"),
+    ("FORM_053", "Shopping platform filter checkbox: Myntra", "P2", "shopping", "input[type='checkbox']", "Myntra"),
+    ("FORM_054", "Shopping platform filter checkbox: Ajio", "P2", "shopping", "input[type='checkbox']", "Ajio"),
+    ("FORM_055", "Price range slider minimum value change", "P2", "shopping", "input[type='range']", "1000"),
+    ("FORM_056", "Price range slider maximum value change", "P2", "shopping", "input[type='range']", "8000"),
+    ("FORM_057", "Sort dropdown select: Price Low to High", "P2", "shopping", "select", "price_asc"),
+    ("FORM_058", "Sort dropdown select: Rating High to Low", "P2", "shopping", "select", "rating_desc"),
+    ("FORM_059", "Clear all filters button resets form controls", "P2", "shopping", "button.clear-btn", "reset"),
+    ("FORM_060", "Form validation error highlights invalid input with red ring", "P1", "profile", "input.ng-invalid", "invalid_state"),
 ]
 
 @pytest.mark.parametrize("test_id, name, priority, path, target_css, value", FORM_TEST_CASES)

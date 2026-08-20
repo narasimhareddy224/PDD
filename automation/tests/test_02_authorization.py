@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 from automation.pages.base_page import BasePage
 
-# 40 Test Cases for Authorization & Route Protection
+# 50 Test Cases for Authorization & Route Protection
 AUTHZ_ROUTES = [
     ("AUTHZ_001", "Unauthenticated access to Dashboard route", "P1", "dashboard", "dashboard"),
     ("AUTHZ_002", "Unauthenticated access to Profile route", "P1", "profile", "profile"),
@@ -44,6 +44,16 @@ AUTHZ_ROUTES = [
     ("AUTHZ_038", "Multi-tab session synchronization check", "P2", "favorites", "sync"),
     ("AUTHZ_039", "Auth Guard returnUrl query parameter validation", "P2", "auth/login?returnUrl=/profile", "returnUrl"),
     ("AUTHZ_040", "Cross-origin iframe embedding header protection", "P1", "dashboard", "iframe"),
+    ("AUTHZ_041", "Access to internal API proxy route without authorization", "P1", "api/v1/users/me", "api_guard"),
+    ("AUTHZ_042", "Access to weather service without valid token", "P2", "api/v1/weather", "api_guard"),
+    ("AUTHZ_043", "Access to AI stylist inference without quota authorization", "P2", "assistant", "quota"),
+    ("AUTHZ_044", "Access to outfit generator without registered profile", "P2", "recommendations", "profile_req"),
+    ("AUTHZ_045", "Access to user export JSON without session auth", "P2", "settings/export", "export_auth"),
+    ("AUTHZ_046", "Access to delete account confirmation without re-auth", "P1", "settings/delete", "delete_auth"),
+    ("AUTHZ_047", "Route guard redirection preserves fragment tags", "P3", "dashboard#metrics", "fragment"),
+    ("AUTHZ_048", "Strict CORS headers verification on protected resources", "P2", "assets/data/outfits.json", "cors"),
+    ("AUTHZ_049", "Token refresh mechanism under low TTL", "P2", "dashboard", "refresh"),
+    ("AUTHZ_050", "Concurrent session invalidation check", "P2", "dashboard", "concurrent"),
 ]
 
 @pytest.mark.parametrize("test_id, name, priority, path, validation_type", AUTHZ_ROUTES)

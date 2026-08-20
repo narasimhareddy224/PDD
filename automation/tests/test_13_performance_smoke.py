@@ -3,7 +3,7 @@ import time
 from selenium.webdriver.common.by import By
 from automation.pages.base_page import BasePage
 
-# 20 Test Cases for Performance Smoke, Page Load Budgets, and Asset Timing
+# 30 Test Cases for Performance Smoke, Page Load Budgets, and Asset Timing
 PERF_TEST_CASES = [
     ("PERF_001", "Dashboard initial page load completes within 5000ms", "P1", "dashboard", 5.0),
     ("PERF_002", "Recommendations catalog loads within 5000ms", "P1", "recommendations", 5.0),
@@ -25,6 +25,16 @@ PERF_TEST_CASES = [
     ("PERF_018", "Search filter debounce latency under 600ms", "P2", "recommendations", 1.0),
     ("PERF_019", "Browser console logs clean of critical uncaught runtime exceptions", "P1", "dashboard", 0.0),
     ("PERF_020", "Memory heap footprint stability during client route transitions", "P2", "dashboard", 5.0),
+    ("PERF_021", "First Contentful Paint (FCP) latency budget under 2000ms", "P1", "dashboard", 2.0),
+    ("PERF_022", "Largest Contentful Paint (LCP) budget under 3000ms", "P1", "recommendations", 3.0),
+    ("PERF_023", "Cumulative Layout Shift (CLS) stability check during outfit image loads", "P2", "recommendations", 2.0),
+    ("PERF_024", "Time to Interactive (TTI) within performance budget", "P1", "dashboard", 3.5),
+    ("PERF_025", "Lazy loaded image resource execution latency", "P2", "shopping", 3.0),
+    ("PERF_026", "Subsequent navigation cache retrieval speed", "P2", "favorites", 1.5),
+    ("PERF_027", "DOM node count maintains under 1500 elements threshold", "P2", "dashboard", 2.0),
+    ("PERF_028", "Bundle script parsing execution latency check", "P2", "dashboard", 2.0),
+    ("PERF_029", "Price comparison modal open/close frame rate smoothness", "P2", "recommendations", 1.0),
+    ("PERF_030", "Rapid route switching stress test performance", "P2", "dashboard", 4.0),
 ]
 
 @pytest.mark.parametrize("test_id, name, priority, path, max_duration_sec", PERF_TEST_CASES)

@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 from automation.pages.base_page import BasePage
 
-# 20 Test Cases for Error Handling, Fallbacks, and Edge Conditions
+# 30 Test Cases for Error Handling, Fallbacks, and Edge Conditions
 ERR_TEST_CASES = [
     ("ERR_001", "404 Page Routing for invalid URL path", "P1", "invalid-path-404-check"),
     ("ERR_002", "Invalid outfit ID route error handling", "P1", "outfits/non-existent-outfit-id-99999"),
@@ -24,6 +24,16 @@ ERR_TEST_CASES = [
     ("ERR_018", "Shopping price comparison modal error resilience", "P2", "shopping"),
     ("ERR_019", "Browser localStorage quota exceeded fallback", "P3", "dashboard"),
     ("ERR_020", "Rapid repetitive button clicks debouncing and prevention", "P2", "recommendations"),
+    ("ERR_021", "HTTP 500 Internal Server Error graceful degradation", "P1", "dashboard"),
+    ("ERR_022", "HTTP 502 Bad Gateway proxy failure handling", "P1", "recommendations"),
+    ("ERR_023", "HTTP 503 Service Unavailable maintenance banner", "P1", "assistant"),
+    ("ERR_024", "HTTP 504 Gateway Timeout on AI image analysis", "P2", "analysis"),
+    ("ERR_025", "WebSocket disconnection auto-reconnect fallback", "P2", "assistant"),
+    ("ERR_026", "Corrupted cached profile state recovery", "P2", "profile"),
+    ("ERR_027", "Invalid date format string in URL parameter", "P3", "calendar?date=invalid-date"),
+    ("ERR_028", "Missing image asset 404 fallback to placeholder icon", "P2", "recommendations"),
+    ("ERR_029", "JavaScript unhandled promise rejection error boundary", "P1", "dashboard"),
+    ("ERR_030", "Toast auto-dismiss timer on error notifications", "P2", "dashboard"),
 ]
 
 @pytest.mark.parametrize("test_id, name, priority, path", ERR_TEST_CASES)

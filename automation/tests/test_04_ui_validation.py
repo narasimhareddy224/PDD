@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 from automation.pages.base_page import BasePage
 
-# 50 Test Cases for UI Elements, Glassmorphism, Badges, and Visual Components
+# 60 Test Cases for UI Elements, Glassmorphism, Badges, and Visual Components
 UI_TEST_CASES = [
     ("UI_001", "Navbar logo icon renders properly", "P2", "dashboard", ".navbar-brand, .brand-icon"),
     ("UI_002", "Navbar brand text NextFit AI is visible", "P2", "dashboard", ".brand-name, .navbar-brand"),
@@ -54,6 +54,16 @@ UI_TEST_CASES = [
     ("UI_048", "Calendar page event timeline cards layout", "P2", "calendar", ".timeline-item, .schedule-card"),
     ("UI_049", "Calendar page 'Schedule Outfit' floating modal", "P2", "calendar", ".modal-card, .modal-header"),
     ("UI_050", "Footer copyright and engineering attribution text", "P3", "dashboard", ".footer, footer"),
+    ("UI_051", "Dark mode high contrast ratio validation for primary texts", "P2", "dashboard", "body"),
+    ("UI_052", "Toast notification glassmorphism card elevation", "P2", "dashboard", "app-toast, .toast-container"),
+    ("UI_053", "Skeleton loader placeholder shimmer animation", "P2", "recommendations", ".skeleton, .loading-state"),
+    ("UI_054", "Outfit detail page hero image aspect ratio", "P2", "outfits/outfit-smart-blue-1", ".detail-hero-img"),
+    ("UI_055", "Outfit detail styling breakdown chips list", "P2", "outfits/outfit-smart-blue-1", ".style-tips-box"),
+    ("UI_056", "Settings page profile toggle switch rendering", "P2", "settings", ".switch, input[type='checkbox']"),
+    ("UI_057", "Favorites page count badge counter in header", "P2", "favorites", ".fav-counter, .badge"),
+    ("UI_058", "Modal backdrop blur CSS backdrop-filter property validation", "P2", "recommendations", ".modal-overlay"),
+    ("UI_059", "Custom scrollbar dark theme appearance", "P3", "assistant", ".chat-messages"),
+    ("UI_060", "Interactive hover elevation transforms on cards", "P2", "dashboard", ".glass-card, app-outfit-card"),
 ]
 
 @pytest.mark.parametrize("test_id, name, priority, path, target_css", UI_TEST_CASES)

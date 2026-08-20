@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 from automation.pages.base_page import BasePage
 
-# 20 Test Cases for Session Lifecycle, Token Persistence, and Storage
+# 30 Test Cases for Session Lifecycle, Token Persistence, and Storage
 SESS_TEST_CASES = [
     ("SESS_001", "Session token created in localStorage upon login", "P1", "dashboard"),
     ("SESS_002", "Session token persists across page refreshes", "P1", "dashboard"),
@@ -24,6 +24,16 @@ SESS_TEST_CASES = [
     ("SESS_018", "Demo user session auto-initialization on first launch", "P1", "dashboard"),
     ("SESS_019", "Storage isolation between incognito/private windows", "P3", "dashboard"),
     ("SESS_020", "Clean teardown of event listeners on session terminate", "P2", "settings"),
+    ("SESS_021", "JWT token signature verification on app startup", "P1", "dashboard"),
+    ("SESS_022", "Tampered JWT payload rejection and auto-logout", "P1", "dashboard"),
+    ("SESS_023", "Session storage separation from local storage", "P2", "profile"),
+    ("SESS_024", "Cookie security attributes Secure and SameSite flags", "P2", "dashboard"),
+    ("SESS_025", "Auto-lock session after idle timeout duration", "P3", "dashboard"),
+    ("SESS_026", "Remember Me persistent cookie expiration interval", "P2", "auth/login"),
+    ("SESS_027", "OAuth 2.0 state parameter cross-site request validation", "P1", "auth/login"),
+    ("SESS_028", "Concurrent tab state broadcast channel updates", "P2", "calendar"),
+    ("SESS_029", "Session cleanup upon browser tab close", "P3", "dashboard"),
+    ("SESS_030", "Storage quota warning handler when near limits", "P3", "settings"),
 ]
 
 @pytest.mark.parametrize("test_id, name, priority, path", SESS_TEST_CASES)

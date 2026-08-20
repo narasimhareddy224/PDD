@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 from automation.pages.base_page import BasePage
 
-# 40 Test Cases for Input Sanitization, Boundary Value Analysis, and Constraints
+# 50 Test Cases for Input Sanitization, Boundary Value Analysis, and Constraints
 VAL_TEST_CASES = [
     ("VAL_001", "Registration name boundary: 1 char (below min)", "P2", "auth/register", "name", "A", False),
     ("VAL_002", "Registration name boundary: 2 chars (min boundary)", "P2", "auth/register", "name", "Al", True),
@@ -44,6 +44,16 @@ VAL_TEST_CASES = [
     ("VAL_038", "Password with Arabic numerals", "P3", "auth/login", "password", "كلمةالسر123", True),
     ("VAL_039", "Profile update name with accents 'Éléna Vancé'", "P3", "profile", "name", "Éléna Vancé", True),
     ("VAL_040", "Profile update name with hyphenated compound 'Alex-Rivers'", "P3", "profile", "name", "Alex-Rivers", True),
+    ("VAL_041", "Price slider min-max boundary consistency check", "P2", "shopping", "price", "0-50000", True),
+    ("VAL_042", "Analysis confidence score numeric range 0.0 to 1.0", "P2", "analysis", "score", "0.94", True),
+    ("VAL_043", "Shopping search input with Japanese characters 'ジーンズ'", "P3", "shopping", "search", "ジーンズ", True),
+    ("VAL_044", "Shopping search input with Chinese characters '衬衫'", "P3", "shopping", "search", "衬衫", True),
+    ("VAL_045", "Login email with leading tab character trimmed", "P2", "auth/login", "email", "\talex@fashion.ai", True),
+    ("VAL_046", "Login password with newline character handled", "P2", "auth/login", "password", "Pass\nword123!", False),
+    ("VAL_047", "Profile custom bio input with 250 characters limit", "P3", "profile", "bio", "Bio text " * 25, True),
+    ("VAL_048", "Profile input with encoded URI entities '%20%27%22'", "P2", "profile", "name", "Alex%20Rivers", True),
+    ("VAL_049", "Calendar notes input with markdown characters '# * _'", "P3", "calendar", "notes", "# Event Notes **Bold**", True),
+    ("VAL_050", "Assistant prompt with JSON payload string", "P2", "assistant", "chat", '{"query": "recommend black suit"}', True),
 ]
 
 @pytest.mark.parametrize("test_id, name, priority, path, field, payload, should_accept", VAL_TEST_CASES)

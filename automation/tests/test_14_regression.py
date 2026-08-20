@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 from automation.pages.base_page import BasePage
 
-# 50 Test Cases for End-to-End User Workflows & Regression Coverage
+# 60 Test Cases for End-to-End User Workflows & Regression Coverage
 REG_TEST_CASES = [
     ("REG_001", "E2E: Full user login to dashboard redirection flow", "P1", "dashboard"),
     ("REG_002", "E2E: Photo upload to AI analysis and color harmony generation", "P1", "analysis"),
@@ -54,6 +54,16 @@ REG_TEST_CASES = [
     ("REG_048", "E2E: Browser reload retains active authentication session", "P1", "dashboard"),
     ("REG_049", "E2E: Explicit logout terminates session and navigates to login", "P1", "dashboard"),
     ("REG_050", "E2E: Complete user journey from onboarding to wardrobe curation", "P1", "dashboard"),
+    ("REG_051", "E2E: Quick switch between multiple occasion filters in succession", "P1", "recommendations"),
+    ("REG_052", "E2E: Shopping platform price comparator sorting correctness", "P1", "shopping"),
+    ("REG_053", "E2E: Analysis results automatic integration into recommendations scoring", "P1", "analysis"),
+    ("REG_054", "E2E: Assistant chat suggestion navigation to outfit detail", "P1", "assistant"),
+    ("REG_055", "E2E: Calendar event collision warning on same date and time slot", "P2", "calendar"),
+    ("REG_056", "E2E: Shopping deals price discount percentage validation", "P2", "shopping"),
+    ("REG_057", "E2E: Multi-item favorite addition and sequential removal in closet", "P1", "favorites"),
+    ("REG_058", "E2E: Profile height and weight modification updates recommended size", "P2", "profile"),
+    ("REG_059", "E2E: Full application data reset verification", "P2", "settings"),
+    ("REG_060", "E2E: End-to-end guest user to registered user migration", "P1", "dashboard"),
 ]
 
 @pytest.mark.parametrize("test_id, name, priority, path", REG_TEST_CASES)

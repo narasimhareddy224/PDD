@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 from automation.pages.base_page import BasePage
 
-# 30 Test Cases for Navigation & Routing Integrity
+# 40 Test Cases for Navigation & Routing Integrity
 NAV_TEST_CASES = [
     ("NAV_001", "Navbar Brand Logo navigation to Dashboard", "P1", ".brand-link, .navbar-brand", "dashboard"),
     ("NAV_002", "Navbar link: Dashboard navigation", "P1", "a[routerlink='/dashboard']", "dashboard"),
@@ -34,6 +34,16 @@ NAV_TEST_CASES = [
     ("NAV_028", "Mobile navigation to Profile item from drawer", "P2", "navbar", "mobile_item"),
     ("NAV_029", "External buy link opens in new tab with security rel attributes", "P1", "shopping", "external"),
     ("NAV_030", "Active navigation link highlighted with active CSS class", "P2", "recommendations", "active_class"),
+    ("NAV_031", "Header quick user avatar click opens profile", "P2", "dashboard", "avatar_nav"),
+    ("NAV_032", "Breadcrumb navigation item 1 click", "P3", "outfits/outfit-smart-blue-1", "breadcrumb_1"),
+    ("NAV_033", "Breadcrumb navigation item 2 root click", "P3", "outfits/outfit-smart-blue-1", "breadcrumb_root"),
+    ("NAV_034", "Keyboard Tab focus order across navbar menu items", "P2", "dashboard", "keyboard_tab"),
+    ("NAV_035", "Keyboard Enter key activates focused nav link", "P2", "dashboard", "keyboard_enter"),
+    ("NAV_036", "Keyboard Escape dismisses open mobile menu", "P2", "dashboard", "escape_dismiss"),
+    ("NAV_037", "Scroll to top anchor navigation button", "P3", "dashboard", "scroll_top"),
+    ("NAV_038", "Page title meta updates on route changes", "P2", "dashboard", "page_title"),
+    ("NAV_039", "Deep linking to shopping product details anchor", "P2", "shopping", "anchor_nav"),
+    ("NAV_040", "Preservation of scroll position on back navigation", "P3", "recommendations", "scroll_restore"),
 ]
 
 @pytest.mark.parametrize("test_id, name, priority, trigger, expected_target", NAV_TEST_CASES)

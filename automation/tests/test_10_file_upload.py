@@ -2,7 +2,7 @@ import pytest
 from selenium.webdriver.common.by import By
 from automation.pages.base_page import BasePage
 
-# 20 Test Cases for Photo Upload & Camera Visual Capture
+# 30 Test Cases for Photo Upload & Camera Visual Capture
 UP_TEST_CASES = [
     ("UP_001", "File input element presence on Analysis page", "P1", "analysis", "input[type='file']"),
     ("UP_002", "File input accepts image/jpeg MIME type", "P2", "analysis", "input[type='file']"),
@@ -24,6 +24,16 @@ UP_TEST_CASES = [
     ("UP_018", "Manual correction skin tone dropdown select", "P2", "analysis", "select"),
     ("UP_019", "Manual correction save action updates metrics", "P1", "analysis", ".btn-save, button.btn-primary"),
     ("UP_020", "Re-upload photo resets previous analysis metrics", "P2", "analysis", "input[type='file']"),
+    ("UP_021", "Drag and drop highlight CSS on dragover", "P2", "analysis", ".upload-dropzone"),
+    ("UP_022", "Invalid PDF file upload rejection", "P2", "analysis", "input[type='file']"),
+    ("UP_023", "Invalid executable file upload rejection", "P1", "analysis", "input[type='file']"),
+    ("UP_024", "Image file size limit validation > 10MB", "P2", "analysis", "input[type='file']"),
+    ("UP_025", "Image orientation EXIF metadata auto-rotation", "P3", "analysis", ".preview-image"),
+    ("UP_026", "Upload progress bar percentage rendering", "P2", "analysis", ".progress-bar"),
+    ("UP_027", "Cancel upload in progress button interaction", "P2", "analysis", ".btn-cancel"),
+    ("UP_028", "Camera permission denial fallback guidance banner", "P1", "analysis", ".permission-alert"),
+    ("UP_029", "Multiple files selection handling in single upload input", "P3", "analysis", "input[type='file']"),
+    ("UP_030", "Base64 data URL preview rendering without page reload", "P2", "analysis", ".preview-image"),
 ]
 
 @pytest.mark.parametrize("test_id, name, priority, path, target_css", UP_TEST_CASES)
