@@ -41,7 +41,7 @@ jobs:
       - name: Stage 3 - Install Frontend Dependencies
         run: |
           cd frontend
-          npm ci
+          npm install --legacy-peer-deps
 
       - name: Stage 4 - Static Analysis & Type Checking
         run: |
