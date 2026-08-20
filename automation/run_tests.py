@@ -70,7 +70,14 @@ def main():
 
     test_target = os.path.join(current_dir, "tests")
     if args.suite:
-        test_target = os.path.join(current_dir, "tests", args.suite)
+        candidate_path = os.path.join(current_dir, "tests", args.suite)
+        candidate_suite = os.path.join(current_dir, "tests", "suites", args.suite)
+        if os.path.exists(candidate_path):
+            test_target = candidate_path
+        elif os.path.exists(candidate_suite):
+            test_target = candidate_suite
+        else:
+            test_target = candidate_path
 
     pytest_args.append(test_target)
 
